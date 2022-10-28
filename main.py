@@ -1,8 +1,6 @@
 # coding: utf-8
 import numpy as np
 import cv2 as cv
-import matplotlib.pyplot as plt
-import math
 from PIL import Image
 
 
@@ -48,7 +46,7 @@ def similarity_func(difference,sigma_r):
     return s
 
 #用于彩色图的双边滤波器
-def bilateral_filtering_color(kernel_size,sigma):
+def bilateral_filtering_color(img,kernel_size,sigma,space):
     '''
     双边滤波操作(彩色图), RGB三通道
     :param init_image: 原始图像路径, type=string
@@ -56,9 +54,17 @@ def bilateral_filtering_color(kernel_size,sigma):
     :param sigma: sigma_d和sigma_r的值, type=list
     :return: 滤波操作后的图像, type=Image
     '''
-    #img_lenna = Image.open(init_image_path)  # 用PIL中的Image.open打开图像
-    img_lenna = cv.imread('red.png')
-    init_image= cv.cvtColor(img_lenna, cv.COLOR_BGR2Lab)
+    img_in = img
+    if space == 'Lab':
+        init_image = cv.cvtColor(img_in, cv.COLOR_BGR2Lab)
+    if space == 'XYZ':
+        init_image = cv.cvtColor(img_in, cv.COLOR_BGR2XYZ)
+    if space == 'HSV':
+        init_image = cv.cvtColor(img_in, cv.COLOR_BGR2HSV)
+    if space == 'HLS':
+        init_image = cv.cvtColor(img_in, cv.COLOR_BGR2HLS)
+    if space == 'Luv':
+        init_image = cv.cvtColor(img_in, cv.COLOR_BGR2Luv)
     init_image_mat = np.array(init_image)  # 将原始图像转化成numpy数组
     sigma_d=sigma[0]
     sigma_r=sigma[1]
@@ -88,20 +94,39 @@ def bilateral_filtering_color(kernel_size,sigma):
                         weight_sum+=weight #记录总权重,用于标准化
                 #标准化及更新
                 filtered_image_mat[x][y][channel]=int(round(filtered_pixel/weight_sum))
-
-    # filtered_image=Image.fromarray(filtered_image_mat)
-    filtered_image = Image.fromarray(cv.cvtColor(filtered_image_mat, cv.COLOR_Lab2RGB))
+    if space == 'Lab':
+        filtered_image = Image.fromarray(cv.cvtColor(filtered_image_mat, cv.COLOR_Lab2RGB))
+    if space == 'XYZ':
+        filtered_image = Image.fromarray(cv.cvtColor(filtered_image_mat, cv.COLOR_XYZ2RGB))
+    if space == 'HSV':
+        filtered_image = Image.fromarray(cv.cvtColor(filtered_image_mat, cv.COLOR_HSV2RGB))
+    if space == 'HLS':
+        filtered_image = Image.fromarray(cv.cvtColor(filtered_image_mat, cv.COLOR_HLS2RGB))
+    if space == 'Luv':
+        filtered_image = Image.fromarray(cv.cvtColor(filtered_image_mat, cv.COLOR_Luv2RGB))
+    filtered_image.save(space + '.png')
     return filtered_image
 
 
 if __name__=='__main__':
-    # kernel_size=[3,3]
-    # sigma=[10,10]
-    # filtered_image=bilateral_filtering_color(kernel_size,sigma)
-    # filtered_image.show()
+    img = cv.imread("red.png",1)
+    kernel_size=[3,3]
+    sigma=[10,10]
+    # filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'Lab')
+    # filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'XYZ')
+    # filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'HLS')
+    filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'Luv')
+    # filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'HSV')
+
+    filtered_image_OpenCV = cv.bilateralFilter(img, 3, 10.0, 10.0)
+    cv.imwrite("RGB.png", filtered_image_OpenCV)
+
+
+
+
     # img_lenna = cv.imread('lena.png')
     # init_image = cv.cvtColor(img_lenna, cv.COLOR_BGR2Lab)
     # cv.imwrite("1.png",init_image)
-    img = cv.imread("red.png", 1)
-    filtered_image_OpenCV = cv.bilateralFilter(img, 3, 10.0, 10.0)
-    cv.imwrite("new.png", filtered_image_OpenCV)
+    # img = cv.imread("red.png", 1)
+    # filtered_image_OpenCV = cv.bilateralFilter(img, 3, 10.0, 10.0)
+    # cv.imwrite("new.png", filtered_image_OpenCV)
