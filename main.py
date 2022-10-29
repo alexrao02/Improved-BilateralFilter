@@ -116,7 +116,7 @@ if __name__=='__main__':
     filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'XYZ')
     filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'HLS')
     filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'Luv')
-    filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'HSV')
+    # filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'HSV')
 
     # filtered_image_OpenCV = cv.bilateralFilter(img, 3, 10.0, 10.0)
     #
