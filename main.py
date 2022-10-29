@@ -1,7 +1,7 @@
 # coding: utf-8
 import numpy as np
 import cv2 as cv
-from PIL import Image
+from PIL import Image, ImageFilter
 
 
 def euclidean_distance(x1,y1,x2,y2):
@@ -112,16 +112,17 @@ if __name__=='__main__':
     img = cv.imread("red.png",1)
     kernel_size=[3,3]
     sigma=[10,10]
-    # filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'Lab')
-    # filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'XYZ')
-    # filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'HLS')
+    filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'Lab')
+    filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'XYZ')
+    filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'HLS')
     filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'Luv')
-    # filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'HSV')
+    filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'HSV')
 
-    filtered_image_OpenCV = cv.bilateralFilter(img, 3, 10.0, 10.0)
-    cv.imwrite("RGB.png", filtered_image_OpenCV)
-
-
+    # filtered_image_OpenCV = cv.bilateralFilter(img, 3, 10.0, 10.0)
+    #
+    # im1 = Image.open(r"red.png")
+    # applying the Gaussian Blur filter
+    # im2 = im1.filter(ImageFilter.GaussianBlur(radius=5))
 
 
     # img_lenna = cv.imread('lena.png')
