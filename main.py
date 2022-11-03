@@ -154,7 +154,7 @@ def bilateral_filtering_color(img,kernel_size,sigma,space):
 
 
 if __name__=='__main__':
-    img = cv.imread("red.png",1)
+    img = cv.imread("test_img.png",1)
     kernel_size=[3,3]
     sigma=[10,10]
     filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'RGB')
