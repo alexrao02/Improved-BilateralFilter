@@ -162,6 +162,6 @@ if __name__=='__main__':
     filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'XYZ')
     filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'HLS')
     filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'Luv')
-    filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'MLAB')
     filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'HSV')
+    filtered_image = bilateral_filtering_color(img, kernel_size, sigma, 'MLAB')
 
