@@ -1,4 +1,4 @@
-读完[Bilateral Filtering for Gray and Color Images](https://alexrao02.github.io/web/Bilateral Filtering for Gray and Color Images.pdf)这篇论文，我认为这是一种很简单、粗暴的算法，但越是简单越说明了这个算法的优越性，简单的原理赋予了它更高的效率和可拓展性。以下是我个人对文章的理解:
+读完[Bilateral Filtering for Gray and Color Images](https://alexrao02.github.io/web/BilateralFilteringforGrayandColorImages.pdf)这篇论文，我认为这是一种很简单、粗暴的算法，但越是简单越说明了这个算法的优越性，简单的原理赋予了它更高的效率和可拓展性。以下是我个人对文章的理解:
 
   高斯平滑是一个简单、高效的去噪方法，而本文发现了高斯平滑的不足:虽然图像中的噪点被模糊化，但高斯滤波器会对图像中的边缘像素造成腐蚀，使其扩张，造成边界的模糊。于是文章随即在高斯平滑的基础上提出了双边滤波算法，旨在模糊图明显噪点的同时对边缘像素进行保护，而且双边滤波器很好地保持了高斯平滑算法简单、高效的优点。
 
